@@ -1,0 +1,58 @@
+
+¿Qué es una interfaz?
+
+Puede usar interfaces para describir un objeto, asignar nombres a los tipos del objeto y parametrizarlos, y componer tipos de objetos con nombre existentes en otros nuevos.
+
+interface Employee {
+    firstName: string;
+    lastName: string;
+    fullName(): string;
+}
+
+Observe que la interfaz no inicializa ni implementa las propiedades que se declaran dentro de ella. Esto se debe a que el único trabajo de una interfaz consiste en describir un tipo. Define lo que requiere el contrato de código, mientras que es una variable, función o clase que implementa la interfaz la que se encarga de cumplir el contrato, al proporcionar los detalles de implementación necesarios.
+
+> **Comentario:** Las interfaces son fundamentales en TypeScript para definir la estructura de un objeto y garantizar que cumpla con ciertas características sin preocuparse por la implementación. Esto es muy útil para aumentar la coherencia en un código base grande o en proyectos colaborativos.
+
+Ejemplo:
+let employee: Employee = {
+    firstName : "Emil",
+    lastName: "Andersson",
+    fullName(): string {
+        return this.firstName + " " + this.lastName;
+    }
+}
+
+employee.firstName = 10;  //* Error - Type 'number' is not assignable to type 'string'
+
+> **Comentario:** La comprobación de tipos de TypeScript asegura que los valores asignados a las propiedades de la interfaz sean consistentes con los tipos definidos. En este caso, `firstName` está esperando un string, por lo que asignar un número como `10` genera un error.
+
+### Razones para usar una interfaz en TypeScript
+A menudo, las interfaces son el principal punto de contacto entre dos fragmentos de código TypeScript, sobre todo cuando se trabaja con código JavaScript existente o con objetos de JavaScript integrados.
+
+Puede usar una interfaz para:
+
+- **Crear nombres abreviados para tipos de uso frecuente:** 
+  Incluso con una interfaz simple como la que se declaró en el ejemplo anterior, disfrutará de las ventajas de IntelliSense y la comprobación de tipos.
+
+- **Controlar la coherencia en un conjunto de objetos:** 
+  Cada objeto que implementa la interfaz funciona bajo las mismas definiciones de tipo. Esto puede resultar útil si trabaja con un equipo de desarrolladores y quiere asegurarse de que se pasan valores correctos a las propiedades, constructores o funciones.
+
+- **Describir las API de JavaScript existentes:** 
+  Cuando se trabaja con bibliotecas de JavaScript como jQuery, una interfaz aclara los parámetros de función y los tipos de valor devueltos. 
+
+> **Comentario:** Las interfaces ayudan a mejorar la comunicación entre distintos módulos o entre equipos de desarrollo, asegurando que todos los objetos que implementan una interfaz lo hagan de manera coherente y predecible.
+
+### ¿En qué se diferencia una interfaz de un alias de tipo?
+
+La interfaz Employee anterior también se puede expresar como un alias de tipo mediante la palabra clave `type`:
+type Employee = {
+    firstName: string;
+    lastName: string;
+    fullName(): string;
+}
+
+> **Comentario:** Aunque ambos son similares en muchos aspectos, la principal diferencia es que una **interfaz es extensible**: se puede "abrir" nuevamente y añadir nuevas propiedades o métodos. Por el contrario, un alias de tipo no se puede modificar una vez declarado.
+
+Otra diferencia clave es que **solo los alias de tipo** permiten describir **uniones o tuplas**, algo que no se puede hacer con interfaces.
+
+> **Conclusión:** Las interfaces y los alias de tipo son herramientas poderosas en TypeScript, cada uno con sus ventajas. Las interfaces son más adecuadas cuando se busca extensibilidad y consistencia, mientras que los alias son útiles cuando se necesita combinar tipos de forma más flexible, como en el caso de las uniones y tuplas.
